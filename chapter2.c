@@ -12,7 +12,9 @@
 #define RONE_SIDE(x)       (x ^ (x - 1))        // turn on everything after the rightmost 1, turns everything else off
 #define RZERO_SIDE(x)      (x ^ (x + 1))        // turn on everything after the rightmost 0, turns everything else off
 #define RIGHT_BLOCK_OFF(x) (((x & -x) + x) & x) // turn off the rightmost string of 1's
+
 #define COMPLEMENT_INC(x)  (-~x)				// x<-x+1; can be repeated to increment as much as you want
+#define COMPLEMENT_DEC(x)  (~-x)				// x<-x-1
 
 /* Print the bits in an uint32_t */
 void print_bits(uint32_t x)
@@ -86,12 +88,20 @@ int main(void)
 	x2 = RIGHT_BLOCK_OFF(x);
 	print_bits(x2);
 
-	/* Test the complement add. */
+	/* Test the complement increment. */
 	fprintf(stdout, "\nTesting COMPLEMENT_INC\n");
 	x = 0;
 	while (x < 10) {
 		printf("%d\n", x);
 		x = COMPLEMENT_INC(x);
+	}
+
+	/* Test the complement decrement. */
+	fprintf(stdout, "\nTesting COMPLEMENT_DEC\n");
+	x = 10;
+	while (x > 0) {
+		printf("%d\n", x);
+		x = COMPLEMENT_DEC(x);
 	}
 
 	return 0;
